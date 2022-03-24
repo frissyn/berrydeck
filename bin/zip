@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+mkdir -p build
+zip -9 -r 'build/berrydeck.love' 'src/'

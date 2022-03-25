@@ -4,6 +4,6 @@
 [submodule "Slab"]
 	path = src/lib/Slab
 	url = https://github.com/flamendless/Slab
-[submodule "xml2lua"]
-	path = src/lib/xml2lua
-	url = https://github.com/manoelcampos/xml2lua
+[submodule "xml2lua-love"]
+	path = src/lib/xml2lua-love
+	url = https://github.com/frissyn/xml2lua-love

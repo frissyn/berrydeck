@@ -1,0 +1,9 @@
+[submodule "Selene"]
+	path = src/lib/Selene
+	url = https://github.com/Vexatos/Selene
+[submodule "Slab"]
+	path = src/lib/Slab
+	url = https://github.com/flamendless/Slab
+[submodule "xml2lua"]
+	path = src/lib/xml2lua
+	url = https://github.com/manoelcampos/xml2lua

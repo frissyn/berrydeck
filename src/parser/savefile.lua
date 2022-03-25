@@ -1,5 +1,5 @@
-local xml2lua = require("lib.xml2lua.xml2lua")
-local handler = require("lib.xml2lua.xmlhandler.tree")
+local xml2lua = require("lib.xml2lua-love.xml2lua")
+local handler = require("lib.xml2lua-love.xmlhandler.tree")
 
 local savefile = {}
 local parser = xml2lua.parser(handler)

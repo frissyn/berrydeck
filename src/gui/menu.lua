@@ -80,6 +80,18 @@ menu.edit = function ()
 
         Slab.Separator()
 
+        if Slab.BeginMenu("Mode") then
+            if Slab.MenuItem("Interactive", {Enabled = GUI.state.modeNotEnabled("editor")}) then
+                GUI.state.scene = "editor"
+            end
+
+            if Slab.MenuItem("Raw", {Enabled = GUI.state.modeNotEnabled("raw")}) then
+                GUI.state.scene = "raw"
+            end
+
+            Slab.EndMenu()
+        end
+
         if Slab.MenuItem("Validate File", {Enabled = GUI.state.isEditing}) then
             -- TODO: check validity of savefile values
             print("click: edit/valid")

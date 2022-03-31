@@ -41,4 +41,19 @@ utils.getAreaIcon = function (id)
 end
 
 
+utils.sepString = function (str, sep)
+    if sep == nil then
+        sep = "([^%s]+)"
+    end
+
+    local t = {}
+
+    for sub in string.gmatch(str, sep) do
+        table.insert(t, sub)
+    end
+
+    return t
+end
+
+
 return utils

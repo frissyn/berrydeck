@@ -11,5 +11,11 @@ return {
         AlignRowY = "center",
         AnchorX = true
     },
+    raw = {
+        AlignX = "center",
+        AlignY = "center",
+        AlignRowY = "center",
+        AnchorX = true
+    },
     winMargin = 24
 }

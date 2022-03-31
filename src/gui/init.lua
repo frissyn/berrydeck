@@ -9,6 +9,7 @@ return {
 
     scenes = {
         editor = require(PATH .. '.scenes.editor'),
-        home = require(PATH .. '.scenes.home')
+        home = require(PATH .. '.scenes.home'),
+        raw = require(PATH .. '.scenes.raw')
     }
 }

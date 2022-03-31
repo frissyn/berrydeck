@@ -1,19 +1,19 @@
 return function ()
-    local save = GUI.state.save
+    local save = GUI.state.save.data.SaveData
 
     Slab.SetCursorPos(nil, GUI.window.Y + 48)
 
     Slab.Indent()
     Slab.Text("Name:")
     Slab.SameLine()
-    if Slab.Input("NameInput", {Text = save.data.Name, ReturnOnText = false}) then
-        save.data.Name = Slab.GetInputText()
+    if Slab.Input("NameInput", {Text = save.Name, ReturnOnText = false}) then
+        save.Name = Slab.GetInputText()
     end
 
     Slab.SameLine({Pad = 16})
     Slab.Text("Version:")
     Slab.SameLine()
-    Slab.Input("VersionInput", {Text = save.data.Version, ReadOnly = true})
+    Slab.Input("VersionInput", {Text = save.Version, ReadOnly = true, SelectOnFocus = false})
 
     Utils.paddedSeparator({Unindent = true})
 
@@ -22,8 +22,8 @@ return function ()
     for i, name in ipairs(GUI.store.modes) do
         Slab.SameLine({Pad = 16})
 
-        if Slab.CheckBox(save.data[name] == "true", name) then
-            save.data[name] = tostring(not Utils.boolf(save.data[name]))
+        if Slab.CheckBox(save[name] == "true", name) then
+            save[name] = tostring(not Utils.boolf(save[name]))
         end
     end
 
@@ -38,11 +38,11 @@ return function ()
 
         if Slab.InputNumberDrag(
             comp.name,
-            save.data[comp.name],
+            save[comp.name],
             comp.min,
             comp.max
         ) then
-            save.data[comp.name] = Slab.GetInputNumber()
+            save[comp.name] = Slab.GetInputNumber()
         end
         Slab.Unindent()
     end
@@ -51,7 +51,7 @@ return function ()
 
     Slab.Indent()
     Slab.Text("Chapters:\n")
-    for _, area in ipairs(save.data.Areas.AreaStats) do
+    for _, area in ipairs(save.Areas.AreaStats) do
         local inx = tonumber(area._attr.ID) + 1
         local path = Utils.getAreaIcon(area._attr.ID)
 

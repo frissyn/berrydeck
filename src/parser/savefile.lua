@@ -18,7 +18,8 @@ savefile.new = function (path)
         return {
             path = path,
             raw = content,
-            data = handler.root.SaveData
+            lib = xml2lua,
+            data = handler.root
         }
     else
         GUI.state.message = {

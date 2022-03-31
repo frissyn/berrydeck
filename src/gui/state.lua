@@ -30,5 +30,12 @@ return {
         popOpen = false,
         title = "Message!",
         data = "This is a message box."
-    }
+    },
+
+    modeNotEnabled = function (sc)
+        return (
+            GUI.state.scene ~= sc and
+            GUI.state.scene ~= "home"
+        )
+    end
 }

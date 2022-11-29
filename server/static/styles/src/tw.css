@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn, .btn-group, .input, .select {
+  @apply rounded;
+}
+
+.input:disabled, .input.input-disabled {
+  @apply text-opacity-20;
+}
+
+.tab-content {
+  @apply rounded-b rounded-tr relative overflow-x-auto;
+}
+
+.input-number {
+  @apply bg-base-100 rounded-sm text-base border-b border-base-content border-opacity-20 text-base;
+}
+
+.input-number:focus {
+  outline: 2px solid hsla(var(--bc) / 0.2);
+  outline-offset: 2px;
+}
+
+.input-ghost:focus {
+  outline: none;
+  border-bottom: 2px solid hsla(var(--bc) / 0.2);
+}

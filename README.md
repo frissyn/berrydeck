@@ -1,7 +1,7 @@
 🍓 BerryDeck
 ============
 
-Simple web interface for creating and editing Savefiles in Celeste, powered by Love2D. Currently a work in progress, stay tuned for the alpha release!
+Simple web interface for creating and editing savefiles in Celeste.
 
 ### Roadmap
 

@@ -1,0 +1,17 @@
+{
+  "name": "berrydeck",
+  "scripts": {
+    "build": "npx tailwindcss -i ./server/static/styles/src/tw.css ./server/templates/**/*.{html} -o ./server/static/styles/out.css -m"
+  },
+  "version": "1.0.0",
+  "description": "Web interface for creating & editing Celeste savefiles.",
+  "repository": "https://github.com/frissyn/berrydeck",
+  "author": "frissyn",
+  "license": "GPL-3.0",
+  "private": false,
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.7",
+    "daisyui": "^2.33.0",
+    "tailwindcss": "^3.2.1"
+  }
+}

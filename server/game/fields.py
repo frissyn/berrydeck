@@ -1,3 +1,5 @@
+from .filetime import FileTime
+
 class Field():
     def __init__(self, name: str, save):
         self.name = name
@@ -67,6 +69,14 @@ class SelectField(Field):
             raise TypeError(f'"{value}" is not a valid option for tag <{self.name}>')
         else:
             super().set(value)
+
+
+class FileTimeField(Field):
+    def __init__(self, name: str, save, **extras):
+        super().__init__(name, save)
+
+        self.value = FileTime(int(self.value))
+        
 
 
 class FieldList(list):

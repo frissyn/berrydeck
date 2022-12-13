@@ -3,18 +3,37 @@ import datetime as dt
 
 
 class FileTime(object):
-    def __init__(self, t):
-        self.units = int(t)
-        self.delta = dt.timedelta(milliseconds=(t / 10000.0))
+    def __init__(self, units: int = 1, **clock):
+        if clock:
+            units = sum([
+                clock.get("ms",    0),
+                clock.get("secs",  0) * 1000.0,
+                clock.get("mins",  0) * 60000.0,
+                clock.get("hours", 0) * 3600000.0,
+                clock.get("days",  0) * 86400000.0,
+            ]) * 10000.0
 
-        self.ms = self.delta.total_seconds() * 1000.0
-        self.secs = float(self.delta.total_seconds())
-        self.mins = self.delta.total_seconds() / 60.0
+        self.units = int(units)
+        self.delta = dt.timedelta(milliseconds=(units / 10000.0))
+
+        self.ms    = self.delta.total_seconds() * 1000.0
+        self.secs  = float(self.delta.total_seconds())
+        self.mins  = self.delta.total_seconds() / 60.0
         self.hours = self.delta.total_seconds() / 3600.0
-        self.days = self.delta.total_seconds() / 86400.0
+        self.days  = self.delta.total_seconds() / 86400.0
+
 
     def __str__(self):
         return self.fclock()
+
+    def __repr__(self):
+        return self.fclock()
+
+    def __add__(self, b):
+        return FileTime(self.units + b.units)
+
+    def __sub__(self, b):
+        return FileTime(self.units - b.units)
 
     @classmethod
     def make(cls, days=0, hours=0, mins=0, secs=0, ms=0):

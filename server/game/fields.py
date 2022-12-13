@@ -1,19 +1,19 @@
 from .filetime import FileTime
 
+
 class Field():
     def __init__(self, name: str, save):
         self.name = name
         self.tree = save._tree
-        # print(name)
         self.node = save._tree.find(name)
         self.value = self.node.text
 
     def __call__(self, *args, **kwargs):
         # so scuffed, so cursed. lord have mercy
-        if bool(args):
+        if args or kwargs:
             return self.__init__(*args, **kwargs)
-        else:
-            return self.value
+
+        return self.value
 
     def __str__(self):
         return str(self.value)
@@ -76,7 +76,6 @@ class FileTimeField(Field):
         super().__init__(name, save)
 
         self.value = FileTime(int(self.value))
-        
 
 
 class FieldList(list):
@@ -87,8 +86,6 @@ class FieldList(list):
 
         for n, attr in extras["children"]:
             typ = attr.pop("type")
-
-            # print(n, typ, attr)
 
             if typ == "text":
                 f = TextField(n, save)

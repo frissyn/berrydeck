@@ -3,7 +3,7 @@ import datetime as dt
 
 
 class FileTime(object):
-    def __init__(self, units: int = 1, **clock):
+    def __init__(self, units: int = 0, **clock):
         if clock:
             units = sum([
                 clock.get("ms",    0),
@@ -34,18 +34,6 @@ class FileTime(object):
 
     def __sub__(self, b):
         return FileTime(self.units - b.units)
-
-    @classmethod
-    def make(cls, days=0, hours=0, mins=0, secs=0, ms=0):
-        return cls(
-            sum([
-                days * 86400000.0,
-                hours * 3600000.0,
-                mins * 60000.0,
-                secs * 1000.0,
-                ms
-            ]) * 10000.0
-        )
 
     def fclock(self):
         ms = self.delta.total_seconds() * 1000.0

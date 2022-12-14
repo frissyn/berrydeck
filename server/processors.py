@@ -1,7 +1,6 @@
 import re
 import flask
 from server import app
-import xml.etree.ElementTree as ET
 from . import game as celeste
 
 
@@ -29,13 +28,8 @@ def c_library_inject():
 def c_savedata_inject():
     if flask.session.get("fn"):
         try:
-            fh = open(flask.session["fn"])
-        except FileNotFoundError:
+            return dict(save=celeste.Savefile.read(flask.session["fn"]))
+        except Exception:
             return dict(save=None)
-        else:
-            root = ET.fromstring(str(fh.read()))
-            tree = ET.ElementTree(root)
-
-            return dict(save=tree)
 
     return dict(save=None)

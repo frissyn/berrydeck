@@ -1,15 +1,17 @@
+import copy
 from .fields import *
 from .lexicon import Lexicon
 import xml.etree.ElementTree as ET
 
+
 class Savefile(object):
-    def __init__(self, data: str, path: str = None):
+    def __init__(self, data: [str, bytes], path: str = None):
         self._raw, self._path = data, path
         self._tree = ET.ElementTree(ET.fromstring(data))
 
-        # attach xpath elements to savefile class.
-        # so SaveData/Assists/DashMode, for example,
-        # becomes savefile.assists.dashmode
+        # attach xpath elements to savefile class
+        # as properties. so SaveData/Assists/DashMode,
+        # for example, becomes savefile.assists.dashmode
         self._propogate_handles()
 
     @classmethod
@@ -23,8 +25,8 @@ class Savefile(object):
         builder = NotImplemented
 
         for name, attr in Lexicon.TREE:
-            attr = attr.copy()
-            fn = attr.pop("type")
+            details = copy.deepcopy(attr)
+            fn = details.pop("type")
 
             if fn == "text":
                 builder = TextField
@@ -39,11 +41,24 @@ class Savefile(object):
             elif fn == "strlist":
                 builder = StructList
             elif fn == "filetime":
-                continue
-            # else: 
-            #     continue
+                builder = FileTimeField
 
             tail_name = name.split("/")[-1].lower()
 
-            field = builder(name, self, **attr)
+            field = builder(name, self, **details)
             setattr(self, tail_name, field)
+
+    def write(self, path: str = None):
+        path = self._path if not path else path
+
+        self._tree.write(path)
+
+        return True
+
+    def get(self, name):
+        attr = getattr(self, str(name).lower(), None)
+
+        if not attr:
+            return getattr(self.assists, str(name).lower())
+
+        return attr

@@ -1,5 +1,5 @@
 class Lexicon:
-    # tuples > lists
+    # schema for translating XML elements to python dataclass
     TREE = (
         ("AssistMode",              {"type": "boolean"}),
         ("CheatMode",               {"type": "boolean"}),
@@ -22,13 +22,23 @@ class Lexicon:
         ("SummitGems", {
             "type": "strlist",
             "count": 6,
+            "justify": True,
             "struct": "boolean",
-            "options": ("true", "false"),
+            "default": "false",
+            "options": ("true", "false")
         }),
         ("Flags", {
             "type": "strlist",
-            "count": 16,
+            "count": 2,
+            "justify": False,
             "struct": "string",
+        }),
+        ("Poem", {
+            "type": "strlist",
+            "count": 16,
+            "justify": False,
+            "struct": "string",
+            "default": "",
             "options": (
                 "fc", "fcr", "os", "osr",
                 "cr", "crr", "cs", "csr",
@@ -40,10 +50,6 @@ class Lexicon:
             "type": "nodelist",
             "children": (
                 ("Assists/DashAssist",        {"type": "boolean"}),
-                ("Assists/DashMode", {
-                    "type": "select",
-                    "options": ["Normal", "Two", "Infinite"],
-                }),
                 ("Assists/GameSpeed",         {"type": "number", "min": 0, "max": 160}),
                 ("Assists/Hiccups",           {"type": "boolean"}),
                 ("Assists/InfiniteStamina",   {"type": "boolean"}),
@@ -52,64 +58,46 @@ class Lexicon:
                 ("Assists/LowFriction",       {"type": "boolean"}),
                 ("Assists/MirrorMode",        {"type": "boolean"}),
                 ("Assists/NoGrabbing",        {"type": "boolean"}),
-                ("Assists/PlayAsBadeline",     {"type": "boolean"}),
+                ("Assists/PlayAsBadeline",    {"type": "boolean"}),
                 ("Assists/SuperDashing",      {"type": "boolean"}),
                 ("Assists/ThreeSixtyDashing", {"type": "boolean"}),
+                ("Assists/DashMode", {
+                    "type": "select",
+                    "options": ["Normal", "Two", "Infinite"],
+                }),
             ),
         })
     )
 
-    ATTRS = {
-        "type:text": (
-            "Name",
-            "Version",
-            "LastSave",
-            "TheoSisterName"
+    SEMANTICS = {
+        "stats": (
+            "TotalDeaths",
+            "TotalDashes",
+            "TotalJumps",
+            "TotalWallJumps"
         ),
-        "type:boolean": (
-            "AssistMode",
-            "CheatMode",
-            "VariantMode"
+        "modes": (
+          "AssistMode",
+          "CheatMode",
+          "VariantMode"
         ),
-        "type:number": (
-            ("TotalDashes",             {"min": 0, "max": None}),
-            ("TotalDeaths",             {"min": 0, "max": None}),
-            ("TotalGoldenStrawberries", {"min": 0, "max": 26}),
-            ("TotalJumps",              {"min": 0, "max": None}),
-            ("TotalStrawberries",       {"min": 0, "max": 176}),
-            ("TotalWallJumps",          {"min": 0, "max": None}),
-            ("UnlockedAreas",           {"min": 1, "max": 10})
-        ),
-        "type:select": (
-            ("Assists/DashMode",        ["Normal", "Two", "Infinite"]),
+        "assists": {
+            "number": ("GameSpeed", ),
+            "select": ("DashMode", ),
+            "toggle": (
+              "Invincible",
+              "DashAssist",
+              "InfiniteStamina"
+            )
+        },
+        "variants": (
+          "MirrorMode",
+          "ThreeSixtyDashing",
+          "InvisibleMotion",
+          "NoGrabbing",
+          "LowFriction",
+          "SuperDashing",
+          "Hiccups",
+          "PlayAsBadeline"
         )
     }
-
-    STATS = {
-        "normal": [
-            'TotalDeaths',
-            'TotalJumps',
-            'TotalWallJumps',
-            'TotalDashes'
-        ]
-    }
-    MODES = ['AssistMode', 'CheatMode', 'VariantMode']
-    ASSISTS = {
-        "number": ["Assists/GameSpeed"],
-        "select": ["Assists/DashMode"],
-        "toggle": [
-          "Assists/Invincible",
-          "Assists/DashAssist",
-          "Assists/InfiniteStamina"
-        ]
-    }
-    VARIANTS = [
-        "Assists/MirrorMode",
-        "Assists/ThreeSixtyDashing",
-        "Assists/InvisibleMotion",
-        "Assists/NoGrabbing",
-        "Assists/LowFriction",
-        "Assists/SuperDashing",
-        "Assists/Hiccups",
-        "Assists/PlayAsBadeline"
-    ]

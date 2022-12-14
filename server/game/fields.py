@@ -1,4 +1,5 @@
 from .filetime import FileTime
+import xml.etree.ElementTree as ET
 
 
 class Field():
@@ -66,7 +67,7 @@ class SelectField(Field):
 
     def set(self, value):
         if value not in self.options:
-            raise TypeError(f'"{value}" is not a valid option for tag <{self.name}>')
+            raise ValueError(f'"{value}" is not a valid option for tag <{self.name}>')
         else:
             super().set(value)
 
@@ -102,6 +103,33 @@ class FieldList(list):
         super().__init__(self.children)
 
 
-class StructList(list):
-    def __init__(self, *args, **kwargs):
-        pass
+class StructList(Field):
+    def __init__(self, name: str, save, **extras):
+        super().__init__(name, save)
+        self.max = extras["count"]
+        self.struct = extras["struct"]
+        self.justify = extras["justify"]
+        self.options = extras.get("options", [])
+        self.default = extras.get("default", "")
+        self.value = list(map(lambda x: x.text, self.node))
+
+    def set(self, index: int, value):
+        self.value[index] = value
+        self.node[index].text = value
+
+    def set_as(self, values):
+        self.node.clear()
+
+        if self.justify:
+            values += [self.default, ] * (self.max - len(values))
+
+        for value in values:
+            if value not in self.options and self.default != "":
+                raise ValueError(f"'{value}' is not a valid value for <{self.name}>.")
+
+            el = ET.Element(self.struct)
+            el.text = value
+
+            self.node.append(el)
+
+        self.value = list(map(lambda x: x.text, self.node))

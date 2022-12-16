@@ -56,16 +56,21 @@ class NumberField(Field):
 
 
 class BooleanField(Field):
+    def __init__(self, name: str, save):
+        super().__init__(name, save)
+
+        self.value = True if self.value == "true" else False
+    
     def set(self, value):
         super().set(value)
         self.node.text = str(value).lower()
 
 
     def toggle(self):
-        if self.value == "true":
-            self.set("false")
-        elif self.value == "false":
-            self.set("true")
+        if not self.value:
+            self.set(True)
+        else:
+            self.set(False)
 
 
 class SelectField(Field):
@@ -144,8 +149,9 @@ class StructList(Field):
     def delete(self, name: str):
         index = self.value.index(name)
         print(index, name)
+        print(list(self.node), list(self.node)[index])
 
-        del list(self.node)[index]
+        self.node.remove(list(self.node)[index])
         del self.value[index]
 
     def set_as(self, values):

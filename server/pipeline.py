@@ -35,7 +35,6 @@ class Pipeline:
     @classmethod
     def mods(cls, payload: dict):
         save = Savefile.read(flask.session["fn"])
-        print(payload)
 
         for name in ["AssistMode", "CheatMode", "VariantMode"]:
             save.get(name).set((payload.get(name) != None))
@@ -54,6 +53,7 @@ class Pipeline:
     def flags(cls, payload: dict):
         save = Savefile.read(flask.session["fn"])
         save.theosistername.set(payload.pop("TheoSisterName"))
+        save.revealedchapter9.set(payload.get("RevealedChapter9") != None)
 
         for name in ["MetTheo", "TheoKnowsName"]:
             if payload.get(name) == "on" and name not in save.flags.value:

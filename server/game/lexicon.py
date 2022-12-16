@@ -66,10 +66,23 @@ class Lexicon:
                     "options": ["Normal", "Two", "Infinite"],
                 }),
             ),
-        })
+        }),
     )
 
     SEMANTICS = {
+        "chapters": {
+            "00": ("Prologue",         None),
+            "01": ("Forsaken City",    1),
+            "02": ("Old Site",         2),
+            "03": ("Celestial Resort", 3),
+            "04": ("Golden Ridge",     4),
+            "05": ("Mirror Temple",    5),
+            "06": ("Reflection",       6),
+            "07": ("Summit",           7),
+            "08": ("Epilogue",         None),
+            "09": ("Core",             8),
+            "10": ("Farewell",         9)
+        },
         "stats": (
             "TotalDeaths",
             "TotalDashes",

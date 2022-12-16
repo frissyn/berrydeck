@@ -24,7 +24,7 @@ class Field():
 
     def set(self, value):
         self.value = value
-        self.tree.find(self.name).text = value
+        self.node.text = str(value)
 
         return value
 
@@ -43,8 +43,11 @@ class NumberField(Field):
         n = int(value)
         super().set(value)
 
-        max(self.min, min(n, self.max))
+        if self.max:
+            max(self.min, min(n, self.max))
+
         self.value = int(self.value)
+        self.node.text = str(value)
 
         return int(value)
 
@@ -53,6 +56,11 @@ class NumberField(Field):
 
 
 class BooleanField(Field):
+    def set(self, value):
+        super().set(value)
+        self.node.text = str(value).lower()
+
+
     def toggle(self):
         if self.value == "true":
             self.set("false")
@@ -77,6 +85,12 @@ class FileTimeField(Field):
         super().__init__(name, save)
 
         self.value = FileTime(int(self.value))
+
+    def set(self, value):
+        self.value = value
+        self.node.text = str(value.units)
+
+        return value
 
 
 class FieldList(list):
@@ -113,9 +127,26 @@ class StructList(Field):
         self.default = extras.get("default", "")
         self.value = list(map(lambda x: x.text, self.node))
 
+    def __getitem__(self, *args, **kwargs):
+        return self.value.__getitem__(*args, **kwargs)
+
+    def add(self, value):
+        el = ET.Element(self.struct)
+        el.text = value
+
+        self.node.append(el)
+        self.value = list(map(lambda x: x.text, self.node))
+
     def set(self, index: int, value):
         self.value[index] = value
         self.node[index].text = value
+
+    def delete(self, name: str):
+        index = self.value.index(name)
+        print(index, name)
+
+        del list(self.node)[index]
+        del self.value[index]
 
     def set_as(self, values):
         self.node.clear()

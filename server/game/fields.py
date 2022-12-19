@@ -4,8 +4,7 @@ import xml.etree.ElementTree as ET
 
 class Field():
     def __init__(self, name: str, save):
-        self.name = name
-        self.tree = save._tree
+        self.name, self._tree = name, save._tree
         self.node = save._tree.find(name)
         self.value = self.node.text
 
@@ -107,14 +106,14 @@ class FieldList(list):
         for n, attr in extras["children"]:
             typ = attr.pop("type")
 
-            if typ == "text":
-                f = TextField(n, save)
-            elif typ == "number":
-                f = NumberField(n, save, **attr)
-            elif typ == "boolean":
-                f = BooleanField(n, save)
-            elif typ == "select":
-                f = SelectField(n, save, options=attr["options"])
+            f = {
+                "text": TextField,
+                "boolean": BooleanField,
+                "number": NumberField,
+                "select": SelectField
+            }[typ](n, save, **attr)
+            # was gonna clean up this line but this is funnier, actually
+            # sorry
 
             self.children.append(f)
             setattr(self, n.split("/")[-1].lower(), f)
@@ -148,8 +147,6 @@ class StructList(Field):
 
     def delete(self, name: str):
         index = self.value.index(name)
-        print(index, name)
-        print(list(self.node), list(self.node)[index])
 
         self.node.remove(list(self.node)[index])
         del self.value[index]

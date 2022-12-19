@@ -1,5 +1,6 @@
 import copy
 from .fields import *
+from .areas import Areas
 from .lexicon import Lexicon
 import xml.etree.ElementTree as ET
 
@@ -24,24 +25,21 @@ class Savefile(object):
     def _propogate_handles(self):
         builder = NotImplemented
 
+        setattr(self, "areas", Areas(self._tree))
+
         for name, attr in Lexicon.TREE:
             details = copy.deepcopy(attr)
             fn = details.pop("type")
 
-            if fn == "text":
-                builder = TextField
-            elif fn == "number":
-                builder = NumberField
-            elif fn == "boolean":
-                builder = BooleanField
-            elif fn == "select":
-                builder = SelectField
-            elif fn == "nodelist":
-                builder = FieldList
-            elif fn == "strlist":
-                builder = StructList
-            elif fn == "filetime":
-                builder = FileTimeField
+            builder = {
+                "text": TextField,
+                "number": NumberField,
+                "boolean": BooleanField,
+                "select": SelectField,
+                "nodelist": FieldList,
+                "strlist": StructList,
+                "filetime": FileTimeField
+            }[fn]
 
             tail_name = name.split("/")[-1].lower()
 
@@ -59,6 +57,6 @@ class Savefile(object):
         attr = getattr(self, str(name).lower(), None)
 
         if not attr:
-            return getattr(self.assists, str(name).lower())
+            return getattr(self.assists, str(name).lower(), None)
 
         return attr

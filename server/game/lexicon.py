@@ -1,5 +1,57 @@
 class Lexicon:
-    # schema for translating XML elements to python dataclass
+    # Schema for translating <AreaModeStats /> attrs to Python attributes.
+    ATTRIB = (
+        ("BestDashes", {
+            "type": "number",
+            "min": 0, "max": None,
+            "tip": "Least number of dashes used in a full clear of this level."
+        }),
+        ("BestDeaths", {
+            "type": "number",
+            "min": 0, "max": None,
+            "tip": "Least number of deaths in a full clear of this level."
+        }),
+        ("BestFullClearTime", {
+            "type": "filetime",
+            "tip": "Shortest elasped time for a full clear of this level."
+        }),
+        ("BestTime", {
+            "type": "filetime",
+            "tip": "Shortest elaspsed time for all checkpoints of this level."
+        }),
+        ("Completed", {
+            "type": "boolean",
+            "tip": "Comepletion status of this level."
+        }),
+        ("Deaths", {
+            "type": "number",
+            "min": 0, "max": None,
+            "tip": "Total number of deaths for this level."
+        }),
+        ("FullClear", {
+            "type": "boolean",
+            "tip": "Full clear completetion status for this level. Requires all"
+                   "entities to be collected in a single session."
+        }),
+        ("HeartGem", {
+            "type": "boolean",
+            "tip": "Collection status for this level's heart."
+        }),
+        ("SingleRunCompleted", {
+            
+        }),
+        ("TimePlayed", {
+            "type": "filetime",
+            "tip": "Total elapsed time spent playing this level."
+        }),
+        ("TotalStrawberries", {
+            "type": "number",
+            "min": 0, "max": None,
+            "tip": ""
+        }),
+    )
+
+    # Schema for translating root-level XML elements to Python "Savefile(...)"
     TREE = (
         ("AssistMode",              {"type": "boolean"}),
         ("CheatMode",               {"type": "boolean"}),
@@ -17,7 +69,7 @@ class Lexicon:
         ("VariantMode",             {"type": "boolean"}),
         ("Version",                 {"type": "text"}),
         ("RevealedChapter9",        {"type": "boolean"}),
-        ("LastArea",                {"type": "shard"}),
+        # ("LastArea",                {"type": "text"}),
         # -----
         ("SummitGems", {
             "type": "strlist",
@@ -70,6 +122,15 @@ class Lexicon:
     )
 
     SEMANTICS = {
+        "assists": {
+            "number": ("GameSpeed", ),
+            "select": ("DashMode", ),
+            "toggle": (
+              "Invincible",
+              "DashAssist",
+              "InfiniteStamina"
+            )
+        },
         "chapters": {
             "00": ("Prologue",         None),
             "01": ("Forsaken City",    1),
@@ -83,26 +144,8 @@ class Lexicon:
             "09": ("Core",             8),
             "10": ("Farewell",         9)
         },
-        "stats": (
-            "TotalDeaths",
-            "TotalDashes",
-            "TotalJumps",
-            "TotalWallJumps"
-        ),
-        "modes": (
-          "AssistMode",
-          "CheatMode",
-          "VariantMode"
-        ),
-        "assists": {
-            "number": ("GameSpeed", ),
-            "select": ("DashMode", ),
-            "toggle": (
-              "Invincible",
-              "DashAssist",
-              "InfiniteStamina"
-            )
-        },
+        "modes": ("AssistMode", "CheatMode", "VariantMode"),
+        "stats": ("TotalDeaths", "TotalDashes", "TotalJumps", "TotalWallJumps"),
         "variants": (
           "MirrorMode",
           "ThreeSixtyDashing",

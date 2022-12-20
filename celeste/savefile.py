@@ -43,8 +43,11 @@ class Savefile(object):
 
             tail_name = name.split("/")[-1].lower()
 
-            field = builder(name, self, **details)
-            setattr(self, tail_name, field)
+            try: 
+                field = builder(name, self, **details)
+                setattr(self, tail_name, field)
+            except AttributeError as e:
+                setattr(self, tail_name, None)
 
     def write(self, path: str = None):
         path = self._path if not path else path

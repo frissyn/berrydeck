@@ -47,7 +47,7 @@ class Lexicon:
         ("TotalStrawberries", {
             "type": "number",
             "min": 0, "max": None,
-            "tip": ""
+            "tip": "Total number of strawberries collected in this level."
         }),
     )
 
@@ -132,17 +132,17 @@ class Lexicon:
             )
         },
         "chapters": {
-            "00": ("Prologue",         None),
-            "01": ("Forsaken City",    1),
-            "02": ("Old Site",         2),
-            "03": ("Celestial Resort", 3),
-            "04": ("Golden Ridge",     4),
-            "05": ("Mirror Temple",    5),
-            "06": ("Reflection",       6),
-            "07": ("Summit",           7),
-            "08": ("Epilogue",         None),
-            "09": ("Core",             8),
-            "10": ("Farewell",         9)
+            "00": ("Prologue",         None, {"A": True, "B": None, "C": None}),
+            "01": ("Forsaken City",    1,    {"A": True, "B": True, "C": True}),
+            "02": ("Old Site",         2,    {"A": True, "B": True, "C": True}),
+            "03": ("Celestial Resort", 3,    {"A": True, "B": True, "C": True}),
+            "04": ("Golden Ridge",     4,    {"A": True, "B": True, "C": True}),
+            "05": ("Mirror Temple",    5,    {"A": True, "B": True, "C": True}),
+            "06": ("Reflection",       6,    {"A": True, "B": True, "C": True}),
+            "07": ("Summit",           7,    {"A": True, "B": True, "C": True}),
+            "08": ("Epilogue",         None, {"A": True, "B": None, "C": None}),
+            "09": ("Core",             8,    {"A": True, "B": True, "C": True}),
+            "10": ("Farewell",         9,    {"A": True, "B": None, "C": None})
         },
         "modes": ("AssistMode", "CheatMode", "VariantMode"),
         "stats": ("TotalDeaths", "TotalDashes", "TotalJumps", "TotalWallJumps"),

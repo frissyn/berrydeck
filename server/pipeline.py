@@ -1,5 +1,5 @@
 import flask
-from server.game import FileTime, Savefile, Lexicon
+from celeste import FileTime, Savefile, Lexicon
 
 
 class Pipeline:
@@ -22,10 +22,6 @@ class Pipeline:
     @classmethod
     def stats(cls, payload: dict):
         save = Savefile.read(flask.session["fn"])
-
-        save.totalstrawberries.set(
-            int(payload.pop("Reds")) + int(payload.pop("Goldens"))
-        )
 
         for name, value in payload.items():
             save.get(name).set(int(value))

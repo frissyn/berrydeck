@@ -1,7 +1,7 @@
 import re
 import flask
+import celeste
 from server import app
-from . import game as celeste
 
 
 @app.context_processor

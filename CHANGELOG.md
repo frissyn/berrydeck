@@ -2,6 +2,15 @@
 
 Because BerryDeck is a web-based application, it isn't really productive to publish "versions" in the traditional sense, so date & time will be used to track code changes.
 
+### Dec 20, 2022 (Alpha)
+
++ Squash some bugs!
+    + Remove "Red Strawberries" field
+    + Display Total Strawberries & Total Golden Strawberries
+    + Thanks to _PaulCubes, MnstrMan06, Hyonk Tea, & Bred_ for their bug reports!
++ Add metadata editing for all chapters and modes
++ Add statistics editing for all chapters and modes 
+
 ### Dec 19, 2022 (Alpha)
 
 _First public release of BerryDeck._

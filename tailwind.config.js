@@ -7,7 +7,7 @@ module.exports = {
         themes: ["cupcake", "dark"]
     },
     content: [
-        "./server/templates/**/*.{html,xhtml}",
+        "./server/templates/**/*.{html,vue}",
         "./server/static/styles/src/*.css"
     ]
 }
